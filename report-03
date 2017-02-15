@@ -1,0 +1,47 @@
+\documentclass[12pt]{article}
+
+% This is the preamble, load any packages you're going to use here
+\usepackage{physics} % provides lots of nice features and commands often used in physics, it also loads some other packages (like AMSmath)
+\usepackage{siunitx} % typesets numbers with units very nicely
+\usepackage{enumerate} % allows us to customize our lists
+
+
+
+\begin{document}
+
+\title{Report for 03-visualization paper}
+\author{Xinyu Chen}
+\date{\today}
+
+\maketitle
+
+\section{Summary}
+	This paper presented a case study to apply visualization techniques on the QHAPDC(the Queensland Hospital Admitted Patient Data Collection) data. These visualization approaches can help non-statistics experts in better understanding and decision making to improve healthcare provision.\\
+    
+    The paper used the \textit{Acute Myocardial Infarction} (AMI) to illustrate how the QHAPDC data are encoded according to the \textit{International Classification of Diseases and Related Health Problems, 10th Revision, Australian Modification} standards and organized in \textit{Diagnosis-Related groups}(DRGs) and \textit{Major Diagnostic Categories}(MDCs). Later on, the authors demonstrate the visualization and analysis of AMI data by using histogram, fluctuation plots, mosaic plots, time plots, heatmaps and disease maps. They concluded the project that visualization complements formal statistics analysis and expands the audience for healthcare data.          
+    
+    
+\section{Key Takeaway}
+	Visualization is very important to interpret statistical analysis. This paper provided a case study of visualization the healthcare data. Although very simple, histograms can provide a lot insights for the first step of data analysis. I think the fluctuation plots are maybe better for interpret correlations than scatter plots. There are a lot of tools I should use more, like time plots, heatmaps and disease maps.  
+    
+\section{Discussions}
+\begin{itemize}
+\item \textit{box plots}.
+		The histograms are useful to capture the shape of distribution. Often we need box plots to compare different groups. Histograms will be not convenient in comparing many groups.
+        
+\item \textit{fluctuation plots}.
+		This seems useful to show correlations for discrete variables. Can scatter plots show the similar results? 
+\item \textit{hypothesis tests}.
+		The paper does not demonstrate how to plot and analyze hypothesis testing. 
+        
+\item \textit{regressions and confident intervals}.
+        Linear regression and logistics regression should be discussed. They are very powerful tools for decision making.
+       
+\item \textit{Time plots}.
+		The time plots seem to be over simplified without considering other factors.
+        
+\end{itemize}        
+	
+
+
+\end{document}
