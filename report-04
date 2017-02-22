@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+
+% This is the preamble, load any packages you're going to use here
+\usepackage{physics} % provides lots of nice features and commands often used in physics, it also loads some other packages (like AMSmath)
+\usepackage{siunitx} % typesets numbers with units very nicely
+\usepackage{enumerate} % allows us to customize our lists
+
+
+
+\begin{document}
+
+\title{Report for 04-A Multiple Test Correction for Streams and Cascades of
+Statistical Hypothesis Tests}
+\author{Xinyu Chen}
+\date{\today}
+
+\maketitle
+
+\section{Summary}
+	This paper presented the Subfamilywise Multiple Testing. This is a multiple-testing correction method to control the familywise error rate(FWER) without the knowledge of specific hypotheses or the number of hypotheses beforehand. \\
+    
+    The paper used a \textit{Monte Carlo} simulation on learning graphic models to demonstrate this Subfamilywise Multiple Testing is important in current machine learning problems. The authors used both synthetic and real-world datasets to show the Subfamiltywise Multiple Testing can produce better results in model selection learning tasks.          
+    
+    
+\section{Key Takeaway}
+	Multiple Testing Correction or Multiple Comparison problem is a important issue in  many researches. I am more aware of this problem after I've read this paper and looked  up for relevant content. The authors presented insights into this problem with regards to machine learning algorithms. They used \textit{Monte Carlo} simulation and this is a great method to gain better understanding of problems from the perspective of probabilities.        
+    
+\section{Discussions}
+\begin{itemize}
+\item \textit{hypothesis streams}.
+		The authors emphasized the number of hypotheses is undetermined and they mentioned hypothesis streams as subsequent hypotheses are unknown until some hypotheses are rejected. However, this violated the assumption for FWER that hypotheses are independent. Under the situation of hypothesis streams, figure 1 does not hold. We should treat FWER as conditional probability in such cases. 
+        
+\item \textit{graphical model selection}.
+		The number of edges at step $s$ is $M=n \cdot (n-1) /2$ is correct, but the number of models $M \cdot (M+1) /2$ is not quite right. Maybe the authors want to show there are that many \textit{configurations}. 
+\item \textit{Monte Carlo simulation}.
+		The p-value are \textit{uniform} distributed from $[0,1]$ for true hypotheses and $[0,maxFalsePValue]$ for false hypotheses, which is not quite reasonable. The p-values are probabilities, they should confirm with the model distribution. In the Monte Carlo simulation, p-values are uniformly distributed, the number of \textit{rejected true} hypotheses increases faster when the size of a \textit{subfamily} increases.  Figure 2 is not a good visualization example.  
+        
+\item \textit{Subfamily size}.
+        The authors claim the probability of a subfamily containing false as well as true hypotheses increases as the size of subfamilies increases. This is not true, unless they designed to change this probability. It should remain the same regardless the size.
+The rejections of r\textit{false} hypotheses has no effect on FWER. Maybe the simulation can omit false ones?
+
+\item \textit{Model Selection}.
+		The algorithm update the \textit{budget} $\alpha$ iteratively. Each time it subtracts $p \cdot |E|$. Can this \textit{budget} $\alpha$ becomes negative with some big \textit{p-values}? 
+        
+\end{itemize}        
+	
+
+
+\end{document}
