@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+
+% This is the preamble, load any packages you're going to use here
+\usepackage{physics} % provides lots of nice features and commands often used in physics, it also loads some other packages (like AMSmath)
+\usepackage{siunitx} % typesets numbers with units very nicely
+\usepackage{enumerate} % allows us to customize our lists
+
+
+
+\begin{document}
+
+\title{Report for 05-Supporting Exploratory Hypothesis Testing and Analysis}
+\author{Xinyu Chen}
+\date{\today}
+
+\maketitle
+
+\section{Summary}
+	This paper presented a framework for automatic generating and testing hypotheses from a dataset. The authors proposed some metrics for comparison between hypotheses, so that users can carry out analysis and extract more interesting knowledge from the generated hypotheses. The paper first gave definitions for \textit{Pattern} as a set of attributes derived from frequent pattern mining. \textit{Hypotheses} consist \textit{context}, \textit{comparing} attributes and \textit{target} attribute. Given these attributes from a hypothesis, they calculated $\chi ^2$ test statistics as the $p-value$s for subpopulations in question. This is how they test and analyze these hypotheses.\\
+    
+    The framework is built upon a \textit{Frequent Pattern Mining} techniques. They first find out some frequent patterns with the  support greater than a $min_sup$ parameter as \textit{context} attributes. After that, they add \textit{comparing} attributes to the \textit{context} to form new hypotheses. As they adding more attributes, they check and prune the hypotheses to avoid similar and uninteresting hypotheses. They did experiments on the UCI machine learning datasets and got interesting results.           
+    
+    
+\section{Key Takeaway}
+	The paper proposed an interesting extension for \textit{Frequent Pattern Mining}. They treated \textit{pattern}s as \textit{hypotheses} and measure the differences in statistics before and after introducing new attributes to the patterns.  Although the complexity seems to be high, this is an interesting approach. I like how they define the problem and how they design some metrics to measure the differences. I think they proved well to illustrate that their algorithm works.       
+    
+\section{Discussions}
+\begin{itemize}
+\item \textit{statistic test and p-value}.
+		The authors seems focused on the $\chi ^2$ test and get the p-value from this test. I guess this is because they argued that only categorical attributes are interesting. I think there are other interesting tests should be applied in hypothesis testing. 
+
+\item \textit{categorical attributes}.
+		The authors demonstrated their algorithm mainly on categorical attributes. They also focused on \textit{comparing} attribute that has two values $v_1, v_2$. This is convenient for $\chi ^2$ test, but there are other interesting and important tests for continuous attributes. 
+        
+\item \textit{influence metrics}.
+		The \textit{DiffLift} is an interesting metrics they designed to check the influences of a \textit{comparing} attribute. They didn't mention but it may sometime generate divide by zero error. They chose this because of simplicity. Maybe there are some other statistics or numbers they can use to measure the influences.
+        
+\item \textit{Add representative Hypotheses}.
+		The algorithm1 showed they pick all pairs of patterns from $G_i$. I think they meant to pick one pattern, like $P \cup A_i$, with $A_i=v_1|v_2$, such that they can compare the subpopulation of $P_1,P_2$. I guess they did not really take pairs of $(G_i, G_j)$. This is confusing.  
+        
+\item \textit{Time Complexity}.
+        They authors claimed the time complexity to generate hypotheses for one frequent pattern is $\Sigma_{A \in P}|Dom(A)|-1$. Assume the minimum value of $|Dom(a)|-1=d$, the lower bond of this $\Sigma$ should be $|P|d$. Due to the number of $|P|$ and the number of frequent patterns, this is an expensive algorithm when the dimensionality increases.     
+        
+\end{itemize}        
+	
+
+
+\end{document}
