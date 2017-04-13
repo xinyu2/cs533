@@ -1,0 +1,52 @@
+\documentclass[12pt]{article}
+
+% This is the preamble, load any packages you're going to use here
+\usepackage{physics} % provides lots of nice features and commands often used in physics, it also loads some other packages (like AMSmath)
+\usepackage{siunitx} % typesets numbers with units very nicely
+\usepackage{enumerate} % allows us to customize our lists
+
+
+
+\begin{document}
+
+\title{Report for 07-The Case of the Missing Supercomputer Performance}
+\author{Xinyu Chen}
+\date{\today}
+
+\maketitle
+
+\section{Summary}
+	This paper leads us through a scientific methodology to analyze and improve the performance of SAGE on supercomputers. This approach consists the following four steps:\\
+\begin{itemize}
+\item \textit{Building models}.
+Use knowledge of both the application and the computer system to build a model that can predict the performance.
+\item \textit{Determine the source of discrepancies}.
+If the measured performance of an application is different from the model's prediction, use exploratory analysis tools to find out the source of such discrepancies.
+\item \textit{Eliminate the causes for the suboptimal performance}.
+Fix the causes of the suboptimal performance and measure the performance.
+\item \textit{Iteratively improve the performance}.
+Repeat step 2 and 3 until the performance matches the model's prediction.  
+\end{itemize}      
+    
+	Step 2 is the most difficult part.  The authors first varied the number of processors per node to validate their model is correct. Then they profile the computation time for several characteristic executions within the whole cycle time to find out the most influential part is the \emph{allreduce} when using four processors per node. With the preliminary results, the authors changed to synthetic benchmarking and tried to improve the synchronization mechanism. However, this only slightly improved the performance of SAGE. Then the authors eliminate the synchronization cause of suboptimal performance and went back to step 2 to search for the causes in nodes themselves. In the next iteration, they found the computation noise, a processor is taken away from the application to handle the system activity, has the same period as the performance variability. They designed new microbenchmarking tools to simulate the influences of these noises. This helped them to eliminate the cause of noises and optimize the performance of SAGE that close to the model's prediction. 
+    
+\section{Key Takeaway}
+	The whole process is a good template. We should design experiments to isolate one possible factor at one time and iteratively fix factors that could influence the performance. To achieve this goal, especially on supercomputer system, we need to develop a lot of simulations and microbenchmarking tools.        
+    
+\section{Discussions}
+
+The paper is very instructive. The following questions are essential for our future researches.
+\begin{itemize}
+\item \textit{Input Model}.
+		The authors tested the performance by varying the number of processors per node. However they decided the model is correct because the results of 1,2 and 3 processors per node match the model's prediction. This is not very clear how can we decide our model is correct with certain confidence?  Should we design some hypothesis tests first?  
+
+\item \textit{Simulation}.
+The authors designed a lot of microbenchmarking tools and simulated the influences of possible factors. The question is how confident we are in these simulations. We often simplify the situations and remove a lot of noises in the \emph{virtual machine}s.       
+
+\item \textit{Computation Noises}.
+The authors improved the performance by limit the computation noises . Does this noise commonly exist in today's supercomputers? Should we consider similar influences in our future researches?   
+\end{itemize}        
+	
+
+
+\end{document}

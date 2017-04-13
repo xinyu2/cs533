@@ -1,0 +1,43 @@
+\documentclass[12pt]{article}
+
+% This is the preamble, load any packages you're going to use here
+\usepackage{physics} % provides lots of nice features and commands often used in physics, it also loads some other packages (like AMSmath)
+\usepackage{siunitx} % typesets numbers with units very nicely
+\usepackage{enumerate} % allows us to customize our lists
+
+
+
+\begin{document}
+
+\title{Report for 06-How to Design Computer Security Experiments}
+\author{Xinyu Chen}
+\date{\today}
+
+\maketitle
+
+\section{Summary}
+	This paper discussed scientific principles for designing computer security experiments. The authors argue that it is important to apply scientific methods to computer science experiments. The most relevant qualities regarding the experiment designs are \textit{Falsifiable}, \textit{Controlled} and \textit{Reproducible}. Another important quality they mentioned is \textit{Blind} and \textit{Double Blind} so that the experimenters and subjects are not aware that certain subjects are controls or not. This quality can prevent the bias introduced by experimenters or subjects. In the following sections, the paper explained the first three qualities in detail.\\
+    
+	The quality of \textit{Falsifiable} should have \textit{observability} and \textit{measurability}. To achieve this, a hypothesis needs to give specific definitions such that they can be observed and measured. The quality of \textit{Controlled} distinguish observations and experiments. Researchers need to set up tests where they can isolate the interesting independent and respond variables. Only by this, they can interpret and establish causal relationship from their experiments. The quality of \textit{Reproducible} is to document conditions and save dataset, so other researchers can reproduce and validate the experiments. An example of testing the performance of a new firewall illustrated the authors' arguments.                        
+    
+    
+\section{Key Takeaway}
+	The three qualities of \textit{Falsifiable}, \textit{Controlled} and \textit{Reproducible} are the essence of this paper. They also gave some scenarios to illustrate good and bad experiment designs. This are useful for our future researches, not limited to computer security problems but also  broader research areas.       
+    
+\section{Discussions}
+
+The paper is straight forward and general, there is not much questions.
+\begin{itemize}
+\item \textit{Input Data}.
+		The authors emphasized to validate input data. They also mentioned the best way to characterize their data set is to release it. Let others be able to use it and reproduce their experiment. This seems to be a subjective method.   
+
+\item \textit{Blind and Double Blind}.
+		The authors mentioned the quality of \textit{blind} and \textit{double blind} are important when humans are subjects. In computer security and a lot of computer science areas, humans are important factors. What is an example that require \textit{blind} or \textit{double blind} in computer science experiments?     
+
+\item \textit{Machine learning Scenarios}.
+		What are some examples that can illustrate the three principles of \textit{Falsifiable}, \textit{Controlled} and \textit{Reproducible} in machine learning experiments? It seems machine learning algorithms already have apply confusion matrix, recall, precision, accuracy rate and visualization techniques to apply the above principles.  
+\end{itemize}        
+	
+
+
+\end{document}
