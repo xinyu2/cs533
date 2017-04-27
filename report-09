@@ -1,0 +1,47 @@
+\documentclass[12pt]{article}
+
+% This is the preamble, load any packages you're going to use here
+\usepackage{physics} % provides lots of nice features and commands often used in physics, it also loads some other packages (like AMSmath)
+\usepackage{siunitx} % typesets numbers with units very nicely
+\usepackage{enumerate} % allows us to customize our lists
+\usepackage[USenglish,UKenglish,french,spanish,italian]{babel}
+\usepackage[nodayofweek,level]{datetime}
+\newcommand{\mydate}{\formatdate{31}{3}{2017}}
+
+\begin{document}
+
+\title{Report for 09-On Simulation and Design of Parallel-Systems
+Schedulers: Are We Doing the Right Thing?}
+\author{Xinyu Chen}
+\date{\selectlanguage{USenglish}\mydate}
+
+\maketitle
+
+\section{Summary}
+	This paper argues that the conventional scheduling simulations use system traces to generate workload. They use time stamps to decide the priority of jobs and do not pay much attention to the interactions between users and systems. Such scheduling, although packing jobs to decrease response time or slowdown, may actually lead user to log off system and decrease user's productivity. The authors propose a new simulation. They generate workload by simulating user-system interactions. They replace the performance metrics of response time and slowdown by throughput and session length. They suggest these new metrics focus on how many jobs one user can submit, are more related with users' satisfaction and productivity. This is a first attempt to analyze user behavior and extract user-system interact patterns from the supercomputer traces. They conclude that this user aware scheduling can prompt user's productivity as much as $50\%$ than conventional scheduling method. 
+    
+\section{Key Takeaway}
+	The authors went through what they extracted from the system traces to find user-system interact pattern. They described how to convert such patterns into some user-behavior simulation models. This is an interesting process of designing a simulation. It is helpful if we need to build some simulations, not limited to user behavior simulations. First find out the CDF of events, then use the given probability to carry out Bernoulli trials and finally generate such events.            
+    
+\section{Discussions}
+
+The paper is interesting. The following questions are important.
+\begin{itemize}
+\item \textit{How real of their workload}.
+	The authors proposed this new simulation use workload generated from their user model. But this user model favors short, interactive jobs. Is their workload representative of real workload of supercomputers? 
+
+\item \textit{A lot of simplification}.
+The authors claimed the users' satisfaction is related with their interaction with system. But a lot of real users will use scripts to submit jobs. Do they really affect by the response time?         
+
+\item \textit{The new metrics}.
+The authors used throughput and session length to measure scheduling performance. Is the number of jobs really a good indicator of productivity? Often the repeated submissions in interactive session are debug tasks. Can these jobs compare with some long time scientific computations? 
+
+\item \textit{The experiment results}.
+The result shows $50\%$ improvement measured by the  metrics of throughput and session-length. But we don't know the exact number of processors and how many processors are required by users. If the majority of users only require single processor to do small jobs, or if the system has a lot more free processors than requests, the experiments didn't give clear environment setup.     
+
+\item \textit{The bias}.
+The new simulation favors short jobs that require less resources. This will make the scheduling approach have only limited application.  
+\end{itemize}        
+
+
+\end{document}
