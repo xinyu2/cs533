@@ -53,9 +53,14 @@ for i in {0..10}; do
     ((maxne=nn[i]*tmp/2))
     for j in {0..20}; do
         if [ "${ne[j]}" -le "$maxne" ]; then
-            ./rg "${nn[i]}" "${ne[j]}" >> data/d_"${nn[i]}"_"${ne[j]}"
+            echo "${nn[i]}" "${ne[j]}"
+            ./rg "${nn[i]}" "${ne[j]}" >> data2/d_"${nn[i]}"_"${ne[j]}"
         else
-            ./rg "${nn[i]}" "$maxne" >> data/d_"${nn[i]}"_"$maxne"
+            if [ "$maxne" -gt "$savene" ]; then
+                ./rg "${nn[i]}" "$maxne" >> data2/d_"${nn[i]}"_"$maxne"
+            fi
+            break
         fi
+        ((savene=ne[j]))
     done
 done

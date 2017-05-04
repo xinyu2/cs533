@@ -1,0 +1,8 @@
+int 2
+max 10
+tar 1
+cwt 10 10 10 10 10 10
+vwt 10 10 10 10 10
+rev r
+tri t
+see s

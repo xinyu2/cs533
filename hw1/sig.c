@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 #define TRUE 1
 #define FALSE 0
-#define MAXNODES  100
+#define MAXNODES  1200
 #define MAXCOLORS 100
-#define MAXEDGES 100*(100-1)/2
+#define MAXEDGES 1200*(1200-1)
 
 /* SIG Simplified Iterated Greedy graph coloring algorithm C.C. McGeoch 2011
    Usage: sig <filename
@@ -16,17 +17,16 @@
 */
 
 #define REPORTSTATS  1
-#define REPORTCOLORS 1
-#define DEBUG 1
+// #define REPORTCOLORS 1
+// #define DEBUG 1
 #define ASSERT(cond, msg) if (! (cond)) {printf("msg \n"); exit(1);} ;
 
-//#include "getinput.c"
+#include "getinput.c"
 
 int numnodes=0;    /* number of nodes in the graph */
 int numcolors=0;   /* initialized to equal numnodes, then decreases  */
 int numedges=0;    /* total edges */
 
-int initpolicy = 1, maxiter=100, revert=100,trials=100,target=10;
 /*-------------------------------------------------------------*/
 /* Graph and coloring representation                           */
 /* The graph is an adjacency list in two arrays                */
@@ -56,7 +56,7 @@ int checkcount;
 
 /*-----------------------------------------------------------*/
 /* Utility functions                                         */
-FILE *fp, *fopen();
+
 /*---printcolors---------------------------------------------*/
 void printcolors(int which)
 {
@@ -228,20 +228,20 @@ void revertToBest() {
 }
 
 /*--pickRandomColorRule------------------------------------------------*/
-/*int pickRandomColorRule() {
+int pickRandomColorRule() {
 
   double  pr = drand48();
   int i;
   for (i=0; pr > ccutoffs[i] ; i++);
   return i;
-  }*/
+}
 /*--pickRandomVertexRule-----------------------------------------------*/
-/*int pickRandomVertexRule() {
+int pickRandomVertexRule() {
   double pr = drand48();
   int i;
   for (i=0; pr > vcutoffs[i]; i++);
   return i;
-  }*/
+}
 
 /*---vertexreorder--------------------------------------*/
 
@@ -329,10 +329,10 @@ void vertexreorder(int vr) {
 
   case 3: //vertices by decreasing vcount in colorset
     for (c = 1; c <= numnodes; c++) order[c] = colorcount[c]; // copy it
+    //  printf("@here c=%d order=%d\n",c,order[c]);}
     while ( TRUE ) {  // at most maxnodes passes, usually fewer
       max = -1;
       for (c = 1; c <= numnodes; c++) if (max < order[c]) max = order[c];
-
       for (c = 1; c <= numnodes; c++) { // copy all groups with max colors
 	if (max == order[c] ) {
 	  vx  = colorhead[c];
@@ -341,9 +341,11 @@ void vertexreorder(int vr) {
 	    vx=next[vx];
 	  }
 	  order[c] = -1 ;  //remove it from copy
+          //order[c] = 0 ;  //remove it from copy
 	}//if max
       }// c passes
-       if (max==0) break;  // last colorcount was 0, done
+       //if (max==0) break;  // last colorcount was 0, done
+      if (max<=0) break;  // last colorcount was 0, done
     }// while true
     break;
   }//switch
@@ -540,6 +542,7 @@ void sigcolor() {
     colorreorder(cr);
     greedycolorgraph(); // recolor, respecting old colors
 
+    //printf("max=%d,b=%d,cc=%d,bc=%d\n",maxiter,b,curcolors,bestcolors);
     if (curcolors < bestcolors) {// if this is a new min color count
       saveAsBest();
       b = 0;
@@ -562,22 +565,10 @@ void sigcolor() {
 int  main(int argc, char* argv[])
 {
 
-  //transinput();  // command file/parameters from standard in
-  if (argc != 2) {
-    printf("usage: color filename\n");
-    exit(1);
-  }
-  else {
-    if ((fp = fopen(*++argv, "r")) == NULL) {
-      printf("color: cant open file %s\n", *argv);
-      exit(1);
-    }
-    else {
-
-      getgraph();    // input graph  (from file named in command file)
-    }
-  }
-
+  transinput();  // command file/parameters from standard in
+  clock_t t0 = clock();
+  getgraph();    // input graph  (from file named in command file)
+  clock_t t1 = clock();
 #ifdef DEBUG
     printf("the graph:\n");
     printgraph();
@@ -594,11 +585,15 @@ int  main(int argc, char* argv[])
 
       sigcolor() ;
 
+      double avecolor= ((double) bestcolorscore) / (double)numnodes;
+      clock_t t2 = clock();
+      double readtm = (double)(t1-t0)/CLOCKS_PER_SEC;
+      double elapse = (double)(t2-t1)/CLOCKS_PER_SEC;
 #ifdef REPORTSTATS
-      printf("i n  m  it  compares maxcolor  colorcount  \n");
-      printf("%d  %d %d  %d  %d      %d       %d          \n",
+      //printf("i n  m  it  compares maxcolor  colorcount  \n");
+      printf("%d, %d, %d, %d, %d, %d, %d, %lf, %lf, %lf\n",
 	     i, numnodes, numedges, trials,
-	     checkcount, bestcolors, bestcolorscore);
+	     checkcount, bestcolors, bestcolorscore, avecolor, readtm, elapse);
 #endif
 
 #ifdef REPORTCOLORS
